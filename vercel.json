@@ -1,6 +1,12 @@
 {
+  "version": 2,
+  "functions": {
+    "api/index.py": {
+      "runtime": "vercel-python@3.9"
+    }
+  },
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/main_server.py" },
+    { "source": "/api/(.*)", "destination": "/api/index.py" },
     { "source": "/dashboard", "destination": "/public/dashboard.html" },
     { "source": "/(.*)", "destination": "/public/index.html" }
   ]
