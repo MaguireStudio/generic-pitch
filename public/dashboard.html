@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Client Lead Command Center</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-900 text-white p-10">
+    <div class="max-w-5xl mx-auto">
+        <div class="flex justify-between items-end mb-8">
+            <div>
+                <h1 class="text-3xl font-bold text-blue-400">(Client Business Name)</h1>
+                <p class="text-slate-400">Real-Time Lead Tracking</p>
+            </div>
+            <div class="bg-blue-900/30 border border-blue-500 text-blue-300 px-4 py-1 rounded-full text-sm">AI Agent Active</div>
+        </div>
+        <div class="bg-slate-800 rounded-xl border border-slate-700 overflow-hidden">
+            <table class="w-full text-left">
+                <thead class="bg-slate-700 text-slate-300 text-sm uppercase">
+                    <tr>
+                        <th class="p-4">Customer Name</th>
+                        <th class="p-4">Phone</th>
+                        <th class="p-4">Interest</th>
+                        <th class="p-4">Status</th>
+                    </tr>
+                </thead>
+                <tbody id="rows" class="divide-y divide-slate-700"></tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        async function load() {
+            const res = await fetch('/api/leads');
+            const data = await res.json();
+            document.getElementById('rows').innerHTML = data.map(l => `
+                <tr class="hover:bg-slate-700/50 transition">
+                    <td class="p-4 font-medium">${l.name}</td>
+                    <td class="p-4 text-slate-400">${l.phone}</td>
+                    <td class="p-4 text-blue-300">${l.interest}</td>
+                    <td class="p-4"><span class="bg-green-900/50 text-green-400 px-2 py-1 rounded text-xs font-bold">NEW</span></td>
+                </tr>
+            `).join('');
+        }
+        load();
+        setInterval(load, 10000);
+    </script>
+</body>
+</html>
